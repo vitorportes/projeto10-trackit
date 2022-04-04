@@ -1,0 +1,12 @@
+body {
+  font-family: "Lexend Deca", sans-serif;
+  font-family: "Playball", cursive;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
