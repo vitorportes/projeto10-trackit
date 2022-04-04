@@ -1,21 +1,50 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import TelaInicial from "./TelaInicial";
-import Cadastro from "./Cadastro";
-import Habitos from "./Habitos";
-import Historico from "./Historico";
-import Hoje from "./Hoje";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { useState } from "react";
 
-export default function App() {
+import UserContext from "../contexts/UserContext";
+import SignUpPage from "./SignUpPage";
+import Habits from "./Habits";
+import LoginPage from "./LoginPage";
+import Today from "./Today";
+import Header from "./Header";
+import Menu from "./Menu";
+import History from "./History";
+import HistoryBonus from "./HistoryBonus";
+
+import "./../css/reset.css";
+import "./../css/style.css";
+
+function App() {
+  const [user, setUser] = useState(
+    localStorage.getItem("userdata")
+      ? JSON.parse(localStorage.getItem("userdata"))
+      : null
+  );
+
+  const [completedHabits, setCompletedHabits] = useState(0);
+  const location = useLocation();
+
   return (
-    <BrowserRouter>
-      <h1>header</h1>
+    <UserContext.Provider
+      value={{ user, setUser, completedHabits, setCompletedHabits }}
+    >
+      {!(location.pathname === "/" || location.pathname === "/cadastro") ? (
+        <>
+          <Header />
+          <Menu />
+        </>
+      ) : (
+        <></>
+      )}
       <Routes>
-        <Route path="/" element={<TelaInicial />} />
-        <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/habitos" element={<Habitos />} />
-        <Route path="/hoje" element={<Historico />} />
-        <Route path="/historico" element={<Hoje />} />
+        <Route path="/" element={<LoginPage />}></Route>
+        <Route path="/cadastro" element={<SignUpPage />}></Route>
+        <Route path="/habitos" element={<Habits />}></Route>
+        <Route path="/hoje" element={<Today />}></Route>
+        <Route path="/historico" element={<HistoryBonus />}></Route>
       </Routes>
-    </BrowserRouter>
+    </UserContext.Provider>
   );
 }
+
+export default App;

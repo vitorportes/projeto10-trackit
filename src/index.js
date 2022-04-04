@@ -1,8 +1,10 @@
-import ReactDOM from "react-dom";
-
-import "./assets/css/reset.css";
-import "./assets/css/style.css";
-
+import reactDOM from "react-dom";
 import App from "./components/App";
+import { BrowserRouter } from "react-router-dom";
 
-ReactDOM.render(<App />, document.querySelector(".root"));
+reactDOM.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.querySelector(".root")
+);
